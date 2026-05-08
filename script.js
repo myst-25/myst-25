@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const moonIcon = document.getElementById('moon-icon');
     const sunIcon = document.getElementById('sun-icon');
     
-    // Check for saved theme preference or use system preference
+    // Check for saved theme preference; default to light if nothing is saved
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Set initial theme
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    // Set initial theme (force light mode if no saved preference)
+    if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         updateIcons('dark');
     } else {
