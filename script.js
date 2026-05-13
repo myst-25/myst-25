@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Toggle popup on card click
     eduCards.forEach(card => {
         card.addEventListener('click', (e) => {
+            // Disable on mobile
+            if (window.innerWidth <= 600) return;
+            
             // Don't close if clicking inside the popup itself
             if (e.target.closest('.flixer-popup')) return; 
             
@@ -99,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h3>${repo.name}</h3>
                             <p>${desc}</p>
                         </div>
-                        <span class="project-meta">${lang}</span>
+                        <span class="project-meta">${lang} <span class="link-arrow">↗</span></span>
                     `;
                     
                     githubProjectsContainer.appendChild(el);
@@ -107,7 +110,196 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => {
                 console.error('Error fetching GitHub repos:', error);
-                githubProjectsContainer.innerHTML = '<div style="padding: 1.25rem 0; color: var(--text-secondary); font-size: 0.9rem;">Failed to load projects. Please visit my GitHub profile directly.</div>';
+                githubProjectsContainer.innerHTML = `
+                    <a href="https://github.com/myst-25/PDFOS" target="_blank" class="project-item">
+                        <div class="project-info">
+                            <h3>PDFOS</h3>
+                            <p>A cross-platform, UI-based PDF manipulation tool built entirely in Python.</p>
+                        </div>
+                        <span class="project-meta">Python <span class="link-arrow">↗</span></span>
+                    </a>
+                    <a href="https://github.com/myst-25/Portfolio" target="_blank" class="project-item">
+                        <div class="project-info">
+                            <h3>Portfolio</h3>
+                            <p>My personal portfolio website with custom minimalist design.</p>
+                        </div>
+                        <span class="project-meta">HTML/CSS <span class="link-arrow">↗</span></span>
+                    </a>
+                `;
             });
+    }
+
+    // Scroll Reveal Animation
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -20px 0px"
+    };
+
+    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, revealOptions);
+
+    revealElements.forEach(el => {
+        revealOnScroll.observe(el);
+    });
+
+    // Profile Image 3D Tilt Effect
+    const profileImg = document.querySelector('.profile-img');
+    if (profileImg) {
+        profileImg.addEventListener('mousemove', (e) => {
+            const rect = profileImg.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Calculate tilt angle (max 15 degrees)
+            const tiltX = ((y - centerY) / centerY) * -15;
+            const tiltY = ((x - centerX) / centerX) * 15;
+            
+            profileImg.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
+            profileImg.style.transition = 'transform 0.1s ease';
+        });
+        
+        profileImg.addEventListener('mouseleave', () => {
+            profileImg.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+            profileImg.style.transition = 'transform 0.5s ease';
+        });
+    }
+
+    // Render Dynamic Status
+    const statusContainer = document.getElementById('dynamic-status');
+    const statusText = document.getElementById('dynamic-status-text');
+
+    if (statusContainer && typeof STATUS_CONFIG !== 'undefined') {
+        const renderStatus = (statusKeyOrText) => {
+            const key = statusKeyOrText.trim().toLowerCase();
+            const activeStatus = STATUS_CONFIG[key] || {
+                text: statusKeyOrText.trim()
+            };
+            
+            // 7 Colors for 7 Days of the week (changes every 24hrs)
+            const weekColors = [
+                "#ef4444", // Sunday: Red
+                "#f97316", // Monday: Orange
+                "#eab308", // Tuesday: Yellow
+                "#10b981", // Wednesday: Green
+                "#3b82f6", // Thursday: Blue
+                "#8b5cf6", // Friday: Violet
+                "#ec4899"  // Saturday: Pink
+            ];
+            
+            const currentDay = new Date().getDay(); // Returns 0 (Sun) to 6 (Sat)
+            const dailyColor = weekColors[currentDay];
+            
+            statusText.textContent = activeStatus.text;
+            // Override the color with the daily color
+            statusContainer.style.setProperty('--status-color', dailyColor);
+            statusContainer.style.display = 'inline-flex';
+        };
+
+        if (typeof STATUS_GIST_URL !== 'undefined' && STATUS_GIST_URL.trim() !== '') {
+            // Fetch from Gist (with cache busting to get instant updates)
+            fetch(STATUS_GIST_URL + '?v=' + new Date().getTime())
+                .then(res => res.text())
+                .then(text => {
+                    if(text) renderStatus(text);
+                })
+                .catch(err => console.error("Failed to fetch Gist status:", err));
+        } else {
+            // Fallback to local logic if no Gist URL is provided
+            for (const key in STATUS_CONFIG) {
+                if (STATUS_CONFIG[key].active) {
+                    renderStatus(key);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Email Modal Logic
+    const emailLink = document.getElementById('email-link');
+    const emailModal = document.getElementById('email-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const emailAddress = 'mohammedyaminsalman@gmail.com';
+
+    if (emailLink && emailModal) {
+        emailLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            emailModal.classList.add('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            emailModal.classList.remove('active');
+        });
+
+        // Close on outside click
+        emailModal.addEventListener('click', (e) => {
+            if (e.target === emailModal) {
+                emailModal.classList.remove('active');
+            }
+        });
+
+        // Copy email functionality (with mobile fallback)
+        copyEmailBtn.addEventListener('click', () => {
+            const handleSuccess = () => {
+                copyEmailBtn.textContent = 'Copied! ✓';
+                copyEmailBtn.style.backgroundColor = '#10b981'; // Success green
+                copyEmailBtn.style.color = '#fff';
+                
+                setTimeout(() => {
+                    copyEmailBtn.textContent = 'Copy Email'; // Reset to default
+                    copyEmailBtn.style.backgroundColor = '';
+                    copyEmailBtn.style.color = '';
+                }, 2000);
+            };
+
+            const handleError = (err) => {
+                console.error('Failed to copy text: ', err);
+                copyEmailBtn.textContent = 'Failed to copy';
+                setTimeout(() => {
+                    copyEmailBtn.textContent = 'Copy Email';
+                }, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                // Modern Async Clipboard API
+                navigator.clipboard.writeText(emailAddress).then(handleSuccess).catch(handleError);
+            } else {
+                // Fallback for older mobile browsers and non-HTTPS local testing
+                try {
+                    const textArea = document.createElement("textarea");
+                    textArea.value = emailAddress;
+                    
+                    // Prevent scrolling and rendering on screen
+                    textArea.style.position = "fixed";
+                    textArea.style.top = "-9999px";
+                    textArea.style.left = "-9999px";
+                    
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    if (successful) {
+                        handleSuccess();
+                    } else {
+                        handleError(new Error('execCommand failed'));
+                    }
+                } catch (err) {
+                    handleError(err);
+                }
+            }
+        });
     }
 });

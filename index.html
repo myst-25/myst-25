@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Mohammed Yamin Salman | myst-25</title>
     <meta name="description"
         content="Portfolio of Mohammed Yamin Salman (myst-25) | Researcher & Developer based in Hyderabad.">
@@ -54,17 +54,24 @@
         </header>
 
         <main class="content">
-            <section class="intro">
+            <section class="intro reveal">
+                <div class="banner-container">
+                    <img src="assets/Banner.jpg" alt="Banner Image" class="banner-img">
+                </div>
                 <img src="assets/profile.jpg" alt="Mohammed Yamin Salman" class="profile-img">
-                <h1>Hi, I'm Mohammed Yamin Salman.</h1>
+                <h1><span class="greeting">Hi, I'm</span> <span class="name">Mohammed Yamin Salman.</span></h1>
                 <p class="tagline">Mythanor</p>
+                <div id="dynamic-status" class="status-indicator" style="display: none;">
+                    <div id="dynamic-status-dot" class="status-dot"></div>
+                    <span id="dynamic-status-text" class="status-text"></span>
+                </div>
                 <p>I'm a 22-year-old researcher and developer based in Hyderabad. Currently pursuing my Master of
                     Pharmacy in Pharmaceutical Chemistry after graduating from the Deccan School of Pharmacy.</p>
                 <p>Coding is my passion. I enjoy building tools, websites, and exploring the intersection of
                     technology and research.</p>
             </section>
 
-            <section class="links">
+            <section class="links reveal">
                 <a href="https://github.com/myst-25" target="_blank" class="link-item">
                     <span class="link-label">GitHub</span>
                     <span class="link-arrow">↗</span>
@@ -84,19 +91,19 @@
                         <img src="assets/x%20popup.png" alt="X Preview">
                     </div>
                 </a>
-                <a href="mailto:mohammedyaminsalman@gmail.com" class="link-item">
+                <a href="#" id="email-link" class="link-item">
                     <span class="link-label">Email</span>
                     <span class="link-arrow">↗</span>
                     <div class="link-popup">Drop me an email</div>
                 </a>
-                <a href="assets/PDFs/Myst-Resume.pdf" target="_blank" class="link-item">
+                <a href="assets/PDFs/Myst-Resume.pdf" target="_blank" type="application/pdf" class="link-item">
                     <span class="link-label">Resume</span>
                     <span class="link-arrow">↗</span>
                     <div class="link-popup">View my CV</div>
                 </a>
             </section>
 
-            <section class="timeline" style="margin-bottom: 4rem;">
+            <section class="timeline reveal" style="margin-bottom: 4rem;">
                 <h2>Education</h2>
                 <div class="project-list">
                     <div class="project-item edu-card" style="cursor: default;">
@@ -202,7 +209,7 @@
                 </div>
             </section>
 
-            <section class="projects">
+            <section class="projects reveal">
                 <h2>Top Projects</h2>
                 <div class="project-list" id="github-projects">
                     <div style="padding: 1.25rem 0; color: var(--text-secondary); font-size: 0.9rem;">
@@ -211,7 +218,7 @@
                 </div>
             </section>
 
-            <section class="research" style="margin-bottom: 4rem;">
+            <section class="research reveal" style="margin-bottom: 4rem;">
                 <h2>Publications</h2>
                 <div class="project-list">
                     <a href="https://journaljpri.com/index.php/JPRI/article/view/7697" target="_blank" class="project-item">
@@ -219,23 +226,43 @@
                             <h3>Research Publication in JPRI</h3>
                             <p>Journal of Pharmaceutical Research International</p>
                         </div>
-                        <span class="project-meta">Link ↗</span>
+                        <span class="project-meta">Link <span class="link-arrow">↗</span></span>
                     </a>
                     <a href="https://www.ijdra.com/index.php/journal/article/view/769" target="_blank" class="project-item">
                         <div class="project-info">
                             <h3>A study on the US FDA Regulatory requirements for Stem Cell Based-Products</h3>
                             <p>International Journal of Drug Regulatory Affairs</p>
                         </div>
-                        <span class="project-meta">Link ↗</span>
+                        <span class="project-meta">Link <span class="link-arrow">↗</span></span>
                     </a>
                 </div>
             </section>
         </main>
 
-        <footer class="footer">
-            <p>&copy; 2026 myst-25</p>
+        <footer class="footer reveal">
+            <p class="footer-quote">"The best way to predict the future is to invent it."</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026</p>
+                <span class="footer-dot">•</span>
+                <p>Made by myst-25</p>
+            </div>
         </footer>
     </div>
+
+    <!-- Email Modal -->
+    <div id="email-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Get in touch</h3>
+            <p>mohammedyaminsalman@gmail.com</p>
+            <div class="modal-actions">
+                <button id="copy-email-btn" class="modal-btn primary-btn">Copy Email</button>
+                <a href="mailto:mohammedyaminsalman@gmail.com" class="modal-btn secondary-btn">Open Mail App</a>
+            </div>
+            <button id="close-modal-btn" class="close-btn">&times;</button>
+        </div>
+    </div>
+
+    <script src="status.js"></script>
     <script src="script.js"></script>
 </body>
 
