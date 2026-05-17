@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const moonIcon = document.getElementById('moon-icon');
     const sunIcon = document.getElementById('sun-icon');
-    
+
     // Check for saved theme preference; default to light if nothing is saved
     const savedTheme = localStorage.getItem('theme');
-    
+
     // Set initial theme (force light mode if no saved preference)
     if (savedTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.addEventListener('click', () => {
         const currentTheme = document.documentElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
+
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateIcons(newTheme);
@@ -37,21 +37,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Education Cards Mobile Click Logic
     const eduCards = document.querySelectorAll('.edu-card');
-    
+
     // Toggle popup on card click
     eduCards.forEach(card => {
         card.addEventListener('click', (e) => {
             // Disable on mobile
             if (window.innerWidth <= 600) return;
-            
+
             // Don't close if clicking inside the popup itself
-            if (e.target.closest('.flixer-popup')) return; 
-            
+            if (e.target.closest('.flixer-popup')) return;
+
             // Remove active from all other cards to keep only one open
             eduCards.forEach(c => {
                 if (c !== card) c.classList.remove('active');
             });
-            
+
             // Toggle the current card
             card.classList.toggle('active');
             e.stopPropagation(); // Prevent document click from immediately closing it
@@ -85,18 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     .filter(repo => !repo.fork)
                     .sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at))
                     .slice(0, 5); // Take top 5
-                
+
                 githubProjectsContainer.innerHTML = ''; // Clear loading message
-                
+
                 topRepos.forEach(repo => {
                     const el = document.createElement('a');
                     el.href = repo.html_url;
                     el.target = '_blank';
                     el.className = 'project-item';
-                    
+
                     const lang = repo.language || 'Code';
                     const desc = repo.description || 'No description provided.';
-                    
+
                     el.innerHTML = `
                         <div class="project-info">
                             <h3>${repo.name}</h3>
@@ -104,9 +104,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <span class="project-meta">${lang} <span class="link-arrow">↗</span></span>
                     `;
-                    
+
                     githubProjectsContainer.appendChild(el);
                 });
+
+                // Add "View All Projects" Button
+                const viewAllContainer = document.createElement('div');
+                viewAllContainer.className = 'view-all-projects-container';
+                viewAllContainer.innerHTML = `<a href="https://github.com/myst-25" target="_blank" class="view-all-btn">View all on GitHub ↗</a>`;
+                githubProjectsContainer.appendChild(viewAllContainer);
             })
             .catch(error => {
                 console.error('Error fetching GitHub repos:', error);
@@ -156,18 +162,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const rect = profileImg.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             // Calculate tilt angle (max 15 degrees)
             const tiltX = ((y - centerY) / centerY) * -15;
             const tiltY = ((x - centerX) / centerX) * 15;
-            
+
             profileImg.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.05)`;
             profileImg.style.transition = 'transform 0.1s ease';
         });
-        
+
         profileImg.addEventListener('mouseleave', () => {
             profileImg.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
             profileImg.style.transition = 'transform 0.5s ease';
@@ -184,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeStatus = STATUS_CONFIG[key] || {
                 text: statusKeyOrText.trim()
             };
-            
+
             // 7 Colors for 7 Days of the week (changes every 24hrs)
             const weekColors = [
                 "#ef4444", // Sunday: Red
@@ -195,32 +201,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 "#8b5cf6", // Friday: Violet
                 "#ec4899"  // Saturday: Pink
             ];
-            
+
             const currentDay = new Date().getDay(); // Returns 0 (Sun) to 6 (Sat)
             const dailyColor = weekColors[currentDay];
-            
+
             statusText.textContent = activeStatus.text;
             // Override the color with the daily color
             statusContainer.style.setProperty('--status-color', dailyColor);
             statusContainer.style.display = 'inline-flex';
         };
 
-        if (typeof STATUS_GIST_URL !== 'undefined' && STATUS_GIST_URL.trim() !== '') {
-            // Fetch from Gist (with cache busting to get instant updates)
-            fetch(STATUS_GIST_URL + '?v=' + new Date().getTime())
-                .then(res => res.text())
-                .then(text => {
-                    if(text) renderStatus(text);
-                })
-                .catch(err => console.error("Failed to fetch Gist status:", err));
-        } else {
-            // Fallback to local logic if no Gist URL is provided
+        // 1. Instant Render (Zero Delay)
+        // Use cached status from a previous visit, or fallback to the default config
+        let initialStatus = localStorage.getItem('myst_cached_status');
+        
+        if (!initialStatus) {
             for (const key in STATUS_CONFIG) {
                 if (STATUS_CONFIG[key].active) {
-                    renderStatus(key);
+                    initialStatus = key;
                     break;
                 }
             }
+        }
+        
+        // Render immediately so there is no layout jump
+        if (initialStatus) {
+            renderStatus(initialStatus);
+        }
+
+        // 2. Background Fetch for Updates
+        if (typeof STATUS_GIST_URL !== 'undefined' && STATUS_GIST_URL.trim() !== '') {
+            fetch(STATUS_GIST_URL + '?v=' + new Date().getTime())
+                .then(res => res.text())
+                .then(text => {
+                    if (text && text.trim() !== '') {
+                        const newStatus = text.trim();
+                        // Save it for the next time they visit
+                        localStorage.setItem('myst_cached_status', newStatus);
+                        
+                        // Update the display silently
+                        renderStatus(newStatus);
+                    }
+                })
+                .catch(err => console.error("Failed to fetch Gist status:", err));
         }
     }
 
@@ -254,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 copyEmailBtn.textContent = 'Copied! ✓';
                 copyEmailBtn.style.backgroundColor = '#10b981'; // Success green
                 copyEmailBtn.style.color = '#fff';
-                
+
                 setTimeout(() => {
                     copyEmailBtn.textContent = 'Copy Email'; // Reset to default
                     copyEmailBtn.style.backgroundColor = '';
@@ -278,19 +301,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     const textArea = document.createElement("textarea");
                     textArea.value = emailAddress;
-                    
+
                     // Prevent scrolling and rendering on screen
                     textArea.style.position = "fixed";
                     textArea.style.top = "-9999px";
                     textArea.style.left = "-9999px";
-                    
+
                     document.body.appendChild(textArea);
                     textArea.focus();
                     textArea.select();
-                    
+
                     const successful = document.execCommand('copy');
                     document.body.removeChild(textArea);
-                    
+
                     if (successful) {
                         handleSuccess();
                     } else {
@@ -300,6 +323,47 @@ document.addEventListener('DOMContentLoaded', () => {
                     handleError(err);
                 }
             }
+        });
+    }
+
+    // Hero Contact Button Logic
+    const heroContactBtn = document.getElementById('hero-contact-btn');
+    if (heroContactBtn && emailModal) {
+        heroContactBtn.addEventListener('click', () => {
+            emailModal.classList.add('active');
+        });
+    }
+
+    // Custom Cursor Logic
+    const customCursor = document.getElementById('custom-cursor');
+    // Only enable if the device supports hover (not touch)
+    if (customCursor && window.matchMedia("(pointer: fine)").matches) {
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = `${e.clientX}px`;
+            customCursor.style.top = `${e.clientY}px`;
+        });
+
+        // Delegate event listener for interactive elements
+        document.body.addEventListener('mouseover', (e) => {
+            const target = e.target.closest('a, button, .project-item, .edu-card, .theme-toggle, input, textarea');
+            if (target) {
+                customCursor.classList.add('cursor-hover');
+            }
+        });
+
+        document.body.addEventListener('mouseout', (e) => {
+            const target = e.target.closest('a, button, .project-item, .edu-card, .theme-toggle, input, textarea');
+            if (target) {
+                customCursor.classList.remove('cursor-hover');
+            }
+        });
+
+        // Hide cursor when it leaves the window
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.opacity = '0';
+        });
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.opacity = '0.5';
         });
     }
 });

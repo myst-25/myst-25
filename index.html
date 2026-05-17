@@ -14,8 +14,8 @@
     <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-FV1ULPN8lTLWpeBNQZOC0.js"></script>
     <script>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init()
+        window.plausible = window.plausible || function () { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function (i) { plausible.o = i || {} };
+        plausible.init()
     </script>
     <meta property="og:image" content="https://myst.website/assets/og-preview.png">
     <meta property="twitter:card" content="summary_large_image">
@@ -30,7 +30,7 @@
 <body>
     <div class="layout">
         <header class="header">
-            <div class="logo">myst-25</div>
+            <div class="logo">Myst-25</div>
             <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
                 <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +69,12 @@
                     Pharmacy in Pharmaceutical Chemistry after graduating from the Deccan School of Pharmacy.</p>
                 <p>Coding is my passion. I enjoy building tools, websites, and exploring the intersection of
                     technology and research.</p>
+                <div class="hero-actions" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;">
+                    <a href="assets/PDFs/Myst-Resume.pdf" target="_blank" class="modal-btn primary-btn" style="width: auto; padding: 0.6rem 1.2rem;">Download Resume</a>
+                    <button id="hero-contact-btn" class="modal-btn secondary-btn" style="width: auto; padding: 0.6rem 1.2rem;">Get in Touch</button>
+                </div>
             </section>
+
 
             <section class="links reveal">
                 <a href="https://github.com/myst-25" target="_blank" class="link-item">
@@ -103,30 +108,58 @@
                 </a>
             </section>
 
+            <section class="skills reveal" style="margin-top: 4rem; margin-bottom: 4rem;">
+                <div class="marquee-container">
+                    <div class="marquee-content">
+                        <!-- Tech Stack Elements -->
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">HTML & CSS</span>
+                        <span class="skill-tag">Pharmacoinformatics</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">Regulatory Affairs</span>
+                        
+                        <!-- Duplicated for seamless animation -->
+                        <span class="skill-tag" aria-hidden="true">Python</span>
+                        <span class="skill-tag" aria-hidden="true">JavaScript</span>
+                        <span class="skill-tag" aria-hidden="true">HTML & CSS</span>
+                        <span class="skill-tag" aria-hidden="true">Pharmacoinformatics</span>
+                        <span class="skill-tag" aria-hidden="true">Data Analysis</span>
+                        <span class="skill-tag" aria-hidden="true">Machine Learning</span>
+                        <span class="skill-tag" aria-hidden="true">Git & GitHub</span>
+                        <span class="skill-tag" aria-hidden="true">Regulatory Affairs</span>
+                    </div>
+                </div>
+            </section>
+
             <section class="timeline reveal" style="margin-bottom: 4rem;">
                 <h2>Education</h2>
                 <div class="project-list">
                     <div class="project-item edu-card" style="cursor: default;">
                         <div class="project-info">
-                            <h3>Master of Pharmacy in Pharmaceutical Chemistry</h3>
-                            <p>Pursuing</p>
+                            <h3>Master of Pharmacy</h3>
+                            <p>Anwar Ul Uloom College of Pharmacy &bull; 2025-2027</p>
                         </div>
-                        <span class="project-meta">Present</span>
+                        <span class="project-meta">7.61 CGPA</span>
                         <!-- Flixer/Netflix Style Popover -->
                         <div class="flixer-popup">
-                            <div class="flixer-backdrop" style="background-image: url('assets/Master%20of%20Pharmacy%20in%20Pharmaceutical%20Chemistry%20Logo.jpg');">
+                            <div class="flixer-backdrop"
+                                style="background-image: url('assets/Master%20of%20Pharmacy%20in%20Pharmaceutical%20Chemistry%20Logo.jpg');">
                                 <div class="flixer-gradient"></div>
                             </div>
                             <div class="flixer-content">
                                 <div class="flixer-header">
-                                    <h3>M.Pharm in Pharmaceutical Chemistry</h3>
+                                    <h3>Anwar Ul Uloom College of Pharmacy</h3>
                                 </div>
                                 <div class="flixer-meta">
-                                    <span>Present</span>
-                                    <span class="badge">PG Degree</span>
+                                    <span>2025-2027</span>
+                                    <span class="badge">M.Pharmacy</span>
                                 </div>
                                 <p class="flixer-desc">
-                                    Engaging in advanced research, pharmaceutical analysis, and drug design.
+                                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/WN6kXRSTjC4MkhhC7" target="_blank" style="color: inherit; text-decoration: underline;">Hyderabad, Telangana</a><br>
+                                    <strong>Score:</strong> 7.61
                                 </p>
                             </div>
                         </div>
@@ -134,24 +167,26 @@
                     <div class="project-item edu-card" style="cursor: default;">
                         <div class="project-info">
                             <h3>Bachelor of Pharmacy</h3>
-                            <p>Deccan School of Pharmacy</p>
+                            <p>Deccan School of Pharmacy &bull; 2021-2025</p>
                         </div>
-                        <span class="project-meta">Graduated</span>
+                        <span class="project-meta">7.61 CGPA</span>
                         <!-- Flixer/Netflix Style Popover -->
                         <div class="flixer-popup">
-                            <div class="flixer-backdrop" style="background-image: url('assets/Deccan%20School%20of%20Pharmacy.webp');">
+                            <div class="flixer-backdrop"
+                                style="background-image: url('assets/Deccan%20School%20of%20Pharmacy.webp');">
                                 <div class="flixer-gradient"></div>
                             </div>
                             <div class="flixer-content">
                                 <div class="flixer-header">
-                                    <h3>Bachelor of Pharmacy</h3>
+                                    <h3>Deccan School of Pharmacy</h3>
                                 </div>
                                 <div class="flixer-meta">
-                                    <span>Graduated</span>
-                                    <span class="badge">UG Degree</span>
+                                    <span>2021-2025</span>
+                                    <span class="badge">B.Pharmacy</span>
                                 </div>
                                 <p class="flixer-desc">
-                                    Completed comprehensive coursework covering pharmacology, pharmaceutics, and clinical pharmacy practice.
+                                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/3EEC5GRT1c6w6VSa8" target="_blank" style="color: inherit; text-decoration: underline;">Hyderabad, Telangana</a><br>
+                                    <strong>Score:</strong> 7.61
                                 </p>
                             </div>
                         </div>
@@ -159,9 +194,9 @@
                     <div class="project-item edu-card" style="cursor: default;">
                         <div class="project-info">
                             <h3>12th Grade (Intermediate)</h3>
-                            <p>Sangareddy &bull; 94.8%</p>
+                            <p>Telangana Minority Junior College &bull; 2019-2021</p>
                         </div>
-                        <span class="project-meta">Completed</span>
+                        <span class="project-meta">94.8%</span>
                         <!-- Flixer/Netflix Style Popover -->
                         <div class="flixer-popup">
                             <div class="flixer-backdrop" style="background-image: url('assets/Sangareddy.png');">
@@ -169,14 +204,15 @@
                             </div>
                             <div class="flixer-content">
                                 <div class="flixer-header">
-                                    <h3>12th Grade (BiPC)</h3>
+                                    <h3>Telangana Minority Junior College</h3>
                                 </div>
                                 <div class="flixer-meta">
-                                    <span>94.8% Score</span>
-                                    <span class="badge">Completed</span>
+                                    <span>2019-2021</span>
+                                    <span class="badge">Inter</span>
                                 </div>
                                 <p class="flixer-desc">
-                                    Biology, Physics, and Chemistry stream. Achieved top honors with a deep focus on foundational life sciences.
+                                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/bRNnexTzuyvH1KBb9" target="_blank" style="color: inherit; text-decoration: underline;">Sangareddy, Telangana</a><br>
+                                    <strong>Score:</strong> 94.8%
                                 </p>
                             </div>
                         </div>
@@ -184,24 +220,26 @@
                     <div class="project-item edu-card" style="cursor: default;">
                         <div class="project-info">
                             <h3>10th Grade (SSC)</h3>
-                            <p>Nizamabad &bull; 98%</p>
+                            <p>Navodaya High School &bull; 2019</p>
                         </div>
-                        <span class="project-meta">Completed</span>
+                        <span class="project-meta">9.8 CGPA</span>
                         <!-- Flixer/Netflix Style Popover -->
                         <div class="flixer-popup">
-                            <div class="flixer-backdrop" style="background-image: url('assets/10th%20Grade%20Logo.jpg');">
+                            <div class="flixer-backdrop"
+                                style="background-image: url('assets/10th%20Grade%20Logo.jpg');">
                                 <div class="flixer-gradient"></div>
                             </div>
                             <div class="flixer-content">
                                 <div class="flixer-header">
-                                    <h3>10th Grade (SSC)</h3>
+                                    <h3>Navodaya High School</h3>
                                 </div>
                                 <div class="flixer-meta">
-                                    <span>98% Score</span>
-                                    <span class="badge">Completed</span>
+                                    <span>2019</span>
+                                    <span class="badge">SSC</span>
                                 </div>
                                 <p class="flixer-desc">
-                                    Strong academic foundation in mathematics, science, and languages. Graduated with distinction.
+                                    <strong>Location:</strong> <a href="https://maps.app.goo.gl/YewCZad66oRSJFRm9" target="_blank" style="color: inherit; text-decoration: underline;">Morthad, Nizamabad</a><br>
+                                    <strong>Score:</strong> 9.8
                                 </p>
                             </div>
                         </div>
@@ -221,19 +259,57 @@
             <section class="research reveal" style="margin-bottom: 4rem;">
                 <h2>Publications</h2>
                 <div class="project-list">
-                    <a href="https://journaljpri.com/index.php/JPRI/article/view/7697" target="_blank" class="project-item">
+                    <a href="https://journaljpri.com/index.php/JPRI/article/view/7697" target="_blank" class="project-item edu-card pub-card">
                         <div class="project-info">
                             <h3>Research Publication in JPRI</h3>
                             <p>Journal of Pharmaceutical Research International</p>
                         </div>
-                        <span class="project-meta">Link <span class="link-arrow">↗</span></span>
+                        <span class="project-meta">Read <span class="link-arrow">↗</span></span>
+                        
+                        <!-- Flixer/Netflix Style Popover -->
+                        <div class="flixer-popup">
+                            <div class="flixer-backdrop" style="background-color: var(--border-color);">
+                                <div class="flixer-gradient"></div>
+                            </div>
+                            <div class="flixer-content">
+                                <div class="flixer-header">
+                                    <h3>JPRI Publication</h3>
+                                </div>
+                                <div class="flixer-meta">
+                                    <span>Peer-Reviewed</span>
+                                    <span class="badge">Article</span>
+                                </div>
+                                <p class="flixer-desc">
+                                    An in-depth analysis focusing on modern pharmaceutical practices and research methodologies.
+                                </p>
+                            </div>
+                        </div>
                     </a>
-                    <a href="https://www.ijdra.com/index.php/journal/article/view/769" target="_blank" class="project-item">
+                    <a href="https://www.ijdra.com/index.php/journal/article/view/769" target="_blank" class="project-item edu-card pub-card">
                         <div class="project-info">
                             <h3>A study on the US FDA Regulatory requirements for Stem Cell Based-Products</h3>
                             <p>International Journal of Drug Regulatory Affairs</p>
                         </div>
-                        <span class="project-meta">Link <span class="link-arrow">↗</span></span>
+                        <span class="project-meta">Read <span class="link-arrow">↗</span></span>
+
+                        <!-- Flixer/Netflix Style Popover -->
+                        <div class="flixer-popup">
+                            <div class="flixer-backdrop" style="background-color: var(--border-color);">
+                                <div class="flixer-gradient"></div>
+                            </div>
+                            <div class="flixer-content">
+                                <div class="flixer-header">
+                                    <h3>IJDRA Publication</h3>
+                                </div>
+                                <div class="flixer-meta">
+                                    <span>Peer-Reviewed</span>
+                                    <span class="badge">Regulatory</span>
+                                </div>
+                                <p class="flixer-desc">
+                                    A comprehensive study outlining the stringent US FDA guidelines and regulatory landscape for stem cell-based therapeutic products.
+                                </p>
+                            </div>
+                        </div>
                     </a>
                 </div>
             </section>
@@ -249,19 +325,33 @@
         </footer>
     </div>
 
-    <!-- Email Modal -->
+    <!-- Contact Modal -->
     <div id="email-modal" class="modal-overlay">
-        <div class="modal-content">
+        <div class="modal-content contact-modal-content">
             <h3>Get in touch</h3>
-            <p>mohammedyaminsalman@gmail.com</p>
-            <div class="modal-actions">
-                <button id="copy-email-btn" class="modal-btn primary-btn">Copy Email</button>
-                <a href="mailto:mohammedyaminsalman@gmail.com" class="modal-btn secondary-btn">Open Mail App</a>
-            </div>
+            <p style="margin-bottom: 1.5rem;">Fill out the form below or reach me at <br><span style="user-select: all; color: var(--text-primary); font-weight: 500;">mohammedyaminsalman@gmail.com</span></p>
+            
+            <form action="https://formspree.io/f/placeholder" method="POST" id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+                </div>
+                <div class="modal-actions form-actions">
+                    <button type="submit" class="modal-btn primary-btn">Send Message</button>
+                    <button type="button" id="copy-email-btn" class="modal-btn secondary-btn">Copy Email</button>
+                </div>
+            </form>
+
             <button id="close-modal-btn" class="close-btn">&times;</button>
         </div>
     </div>
 
+    <div id="custom-cursor"></div>
     <script src="status.js"></script>
     <script src="script.js"></script>
 </body>
